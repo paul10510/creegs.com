@@ -1,0 +1,116 @@
+/* ============================================================
+   resume.html — the two-résumé chooser.
+   Deliberately NOT a pair of identical rounded cards: these are
+   two panels of an instrument face, separated by a hairline, with
+   the whole panel being the link.
+   ============================================================ */
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  /* the 1px gap against this background IS the divider between the panels —
+     the panels themselves carry no border, so there's no double rule */
+  gap: 1px;
+  background: var(--rule);
+  margin-top: clamp(36px, 5vh, 56px);
+}
+
+.choice {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(24px, 3vw, 34px);
+  background: var(--panel);
+  min-width: 0;
+  transition: background 150ms ease;
+}
+.choice:hover { background: var(--panel-2); }
+
+.choice__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.choice__n {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--lime);
+  font-variant-numeric: tabular-nums;
+}
+.choice__tag {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule);
+  padding: 3px 7px;
+}
+
+.choice__title {
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+
+.choice__desc {
+  color: var(--ink-dim);
+  max-width: 46ch;
+  font-size: 15px;
+  line-height: 1.6;
+  /* hold a minimum height so both panels end their copy at the same baseline
+     and the metadata rows align across the gutter */
+  min-height: 5.2em;
+}
+
+.choice__facts {
+  display: grid;
+  grid-template-columns: minmax(88px, auto) 1fr;
+  border-top: 1px solid var(--rule-soft);
+  margin-top: auto;
+  padding-top: 4px;
+}
+.choice__facts > div { display: contents; }
+.choice__facts dt,
+.choice__facts dd {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.choice__facts dt {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-right: 16px;
+}
+.choice__facts dd {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
+.choice__cta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 3px;
+  align-self: flex-start;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+.choice:hover .choice__cta { color: var(--lime); border-color: var(--lime); }
+
+/* this page has no hero and no typewriter, so the shell needs no
+   min-height reservation — but keep the section padding generous */
+.page-resume .section:first-of-type { padding-top: clamp(56px, 9vh, 104px); }
+
+@media (max-width: 760px) {
+  .choice__facts { grid-template-columns: 1fr; }
+  .choice__facts dt { padding-bottom: 0; border-bottom: 0; }
+  .choice__facts dd { padding-top: 4px; }
+}

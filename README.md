@@ -17,12 +17,15 @@ python -m http.server 8000
 
 ```
 index.html              the entire site — one scrolling page, seven anchor sections
+resume.html             chooser between the two résumés
 assets/
   css/main.css          design tokens + all styles
+  css/resume.css        the résumé chooser only
   js/main.js            two things: the hero typewriter and active-tab tracking
   img/                  photos (resized), favicon, logo, Monero QR, video poster
   sand-pool.mp4         the Sand Pool clip
-  paul-creegan-resume.pdf
+  paul-creegan-tech.pdf         software / systems / security résumé
+  paul-creegan-rope-access.pdf  ropes course / outdoor instruction résumé
   fp-yew-mod.zip        the Ultima IV mod
 CNAME                   binds the custom domain creegs.com
 ```

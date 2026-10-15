@@ -136,9 +136,9 @@ h4 {
 .rail__mark { padding: 0 24px 26px; }
 
 .rail__mark img {
-  width: 34px;
-  height: 34px;
-  border-radius: 7px;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
 }
 
 .rail__mark span {
@@ -228,64 +228,22 @@ h4 {
   pointer-events: none;
 }
 
-.hero__inner {
-  position: relative;
-  max-width: 1180px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(28px, 5vw, 80px);
-  align-items: end;
-}
+/* the hero is a single column now — no right-hand readout */
+.hero__inner { position: relative; max-width: 1180px; }
 
-/* the right-hand readout: real facts, so the dead space carries information.
-   Pinned to the bottom so it optically anchors the hero's lower-right. */
-.hero__spec {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  border-left: 1px solid var(--rule);
-  padding-left: clamp(18px, 2vw, 30px);
-  padding-bottom: 6px;
-}
-.hero__spec dt {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-.hero__spec dd {
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  padding-bottom: 15px;
-}
-.hero__spec dd:last-child { padding-bottom: 0; }
-
-@media (max-width: 1080px) {
-  .hero__inner { grid-template-columns: 1fr; }
-  .hero__spec {
-    border-left: 0;
-    border-top: 1px solid var(--rule);
-    padding-left: 0;
-    padding-top: 22px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 18px 24px;
-  }
-  .hero__spec dd { padding-bottom: 0; }
-}
-
+/* ============================================================
+   hero status — the green terminal lines, now below the name
+   ============================================================ */
 .hero__status {
   font-family: var(--mono);
-  font-size: clamp(12px, 0.85vw, 13.5px);
-  line-height: 1.85;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.8;
   color: var(--lime);
   /* reserve the final height (3 lines + caret) so nothing shifts as the
      lines type in — the reserved box is what the settled state occupies */
-  min-height: calc(3 * 1.85em + 1.24em);
-  margin-bottom: clamp(20px, 3vh, 36px);
+  min-height: calc(3 * 1.8em + 1.2em);
+  margin-top: clamp(26px, 4.5vh, 48px);
+  margin-bottom: 0;
 }
 .hero__status .line { display: block; white-space: pre-wrap; }
 .hero__status .caret {
@@ -308,16 +266,8 @@ h4 {
   color: var(--lime);
 }
 
-.hero__lede {
-  max-width: 46ch;
-  font-size: clamp(17px, 1.35vw, 21px);
-  line-height: 1.5;
-  letter-spacing: -0.011em;
-  color: var(--ink);
-}
-
 .hero__links {
-  margin-top: clamp(30px, 5vh, 48px);
+  margin-top: clamp(22px, 3.2vh, 34px);
   display: flex;
   flex-wrap: wrap;
   gap: 12px 16px;
@@ -583,7 +533,7 @@ figcaption code {
     padding: 12px var(--gutter);
   }
   .topbar__mark { display: flex; align-items: center; gap: 11px; }
-  .topbar__mark img { width: 24px; height: 24px; border-radius: 5px; }
+  .topbar__mark img { width: 34px; height: 34px; border-radius: 7px; }
   .topbar__mark span {
     font-family: var(--mono);
     font-size: 11px;

@@ -11,9 +11,9 @@
   /* ─── 1. hero status typewriter ─────────────────────────── */
   var host = document.querySelector("[data-status]");
   var lines = [
-    { text: "paul creegan", cls: "k" },
-    { text: "eagle scout · cybersecurity · fishing", cls: "" },
-    { text: "westchester, ny — status: open to work", cls: "" }
+    { text: "eagle scout · rope access · cybersecurity · fishing", cls: "" },
+    { text: "westchester, ny", cls: "" },
+    { text: "status: open to work", cls: "" }
   ];
 
   function renderInstant() {
