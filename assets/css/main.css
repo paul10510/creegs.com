@@ -548,8 +548,15 @@ figcaption code {
   outline-offset: 2px;
 }
 
+/* photo variant: natural aspect ratios, square thumbs */
+.gallery--photos .gallery__stage { grid-template-columns: minmax(0, 470px) minmax(0, 1fr); }
+.gallery--photos .gallery__fig img { max-height: 580px; object-fit: contain; }
+.gallery--photos .gallery__thumb img { width: 76px; height: 76px; aspect-ratio: 1; }
+
 @media (max-width: 760px) {
-  .gallery__stage { grid-template-columns: 1fr; }
+  /* the photo modifier outranks this rule on specificity, so restate it */
+  .gallery__stage,
+  .gallery--photos .gallery__stage { grid-template-columns: 1fr; }
 }
 
 /* ============================================================

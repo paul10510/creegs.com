@@ -87,23 +87,24 @@
     }
   }
 
-  /* ─── 3. merit badge gallery ─────────────────────────── */
-  var stage = document.querySelector(".gallery__stage");
-  if (stage) {
-    var img = document.getElementById("galleryImg");
-    var title = document.getElementById("galleryTitle");
-    var desc = document.getElementById("galleryDesc");
-    var count = document.getElementById("galleryCount");
-    var thumbs = Array.prototype.slice.call(document.querySelectorAll(".gallery__thumb"));
+  /* ─── 3. galleries (merit badges and fishing photos share this) ─── */
+  Array.prototype.slice.call(document.querySelectorAll(".gallery")).forEach(function (gallery) {
+    var stage = gallery.querySelector(".gallery__stage");
+    if (!stage) return;
+    var img = gallery.querySelector("#galleryImg, [id^=galleryImg]") || stage.querySelector(".gallery__fig img");
+    var title = gallery.querySelector("#galleryTitle, [id^=galleryTitle]") || stage.querySelector(".gallery__meta h3");
+    var desc = gallery.querySelector("#galleryDesc, [id^=galleryDesc]") || stage.querySelector(".gallery__meta p");
+    var count = gallery.querySelector(".gallery__count");
+    var thumbs = Array.prototype.slice.call(gallery.querySelectorAll(".gallery__thumb"));
     var pad = function (n) { return (n < 10 ? "0" : "") + n; };
 
     function select(i) {
       var t = thumbs[i];
       img.src = t.getAttribute("data-src");
       img.alt = t.getAttribute("data-alt");
-      title.textContent = t.getAttribute("data-title");
-      desc.textContent = t.getAttribute("data-desc");
-      count.textContent = pad(i + 1) + " / " + pad(thumbs.length);
+      if (title) title.textContent = t.getAttribute("data-title");
+      if (desc) desc.textContent = t.getAttribute("data-desc");
+      if (count) count.textContent = pad(i + 1) + " / " + pad(thumbs.length);
       thumbs.forEach(function (b, j) {
         var on = i === j;
         b.classList.toggle("is-active", on);
@@ -123,8 +124,8 @@
       });
     });
 
-    // arrow keys move through the pamphlets once focus is in the gallery
-    document.querySelector(".gallery__thumbs").addEventListener("keydown", function (e) {
+    // arrow keys move through the gallery once focus is in it
+    gallery.querySelector(".gallery__thumbs").addEventListener("keydown", function (e) {
       var cur = thumbs.indexOf(document.activeElement);
       if (cur < 0) return;
       var next = e.key === "ArrowRight" ? cur + 1 : e.key === "ArrowLeft" ? cur - 1 : -1;
@@ -134,7 +135,7 @@
         select(next);
       }
     });
-  }
+  });
 
   /* ─── 2. active tab tracking ───────────────────────────── */
   var sections = Array.prototype.slice.call(document.querySelectorAll("section[id]"));
