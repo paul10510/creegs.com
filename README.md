@@ -48,6 +48,16 @@ custom domain breaks.
   the rotation has been applied to the pixels and the tag stripped. If you add
   a new photo, run it through `ImageOps.exif_transpose()` before saving, or it
   will render sideways.
+- **The Eagle Scout insignia has a transparent background.** The source file
+  ships on white with a soft grey drop shadow; the white and the shadow were
+  both keyed out to alpha so it sits on the dark ground without a halo. If you
+  swap in a new insignia, redo that keying — a plain `floodfill` leaves a grey
+  ring, and the badge's own white shield must survive.
+- **To add a badge pamphlet to the scout gallery:** drop the image in
+  `assets/img/`, then copy one of the `<button class="gallery__thumb">` blocks
+  and edit its `data-src`, `data-alt`, `data-title`, and `data-desc`. The
+  stage image and description are driven entirely by those attributes, so the
+  counter and active state update themselves.
 - **Text colors are WCAG AA checked** against the `--void` ground. If you
   lighten or darken an ink token, re-check contrast — captions sit closest to
   the limit at 5.24:1.

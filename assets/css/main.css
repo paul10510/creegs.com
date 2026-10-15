@@ -324,8 +324,7 @@ h4 {
    viewport. Every grid/flex child that holds text must be allowed to shrink. */
 .split > *,
 .roles > *,
-.hero__inner > *,
-.badges > * { min-width: 0; }
+.hero__inner > * { min-width: 0; }
 
 .stack > * + * { margin-top: clamp(20px, 2.6vh, 30px); }
 .stack--tight > * + * { margin-top: 14px; }
@@ -447,16 +446,115 @@ figcaption code {
   font-variant-numeric: tabular-nums;
 }
 
+/* multiple troop roles stack as short lines rather than one long row */
+.dl dd .roles { display: flex; flex-direction: column; gap: 3px; }
+.dl dd .roles em { font-style: normal; color: var(--ink-faint); }
+
 /* ============================================================
-   badge strip (merit badges)
+   merit badge gallery — click-through pamphlets with descriptions.
+   Hairlines and mono labels only; lime marks the active thumb.
    ============================================================ */
-.badges {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
-  gap: 16px;
+.gallery {
+  margin-top: clamp(44px, 6vh, 72px);
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 24px;
 }
-.badges figure img { aspect-ratio: 225 / 332; object-fit: cover; }
-.badges figcaption { margin-top: 7px; }
+
+.gallery__head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: clamp(22px, 3vh, 32px);
+}
+.gallery__num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--lime);
+}
+.gallery__label {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.gallery__rule { flex: 1; height: 1px; background: var(--rule-soft); }
+.gallery__count {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+.gallery__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: clamp(24px, 3.5vw, 48px);
+  align-items: start;
+}
+
+.gallery__fig { margin: 0; min-width: 0; }
+.gallery__fig img {
+  width: 100%;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  aspect-ratio: 225 / 332;
+  object-fit: cover;
+}
+
+.gallery__meta { min-width: 0; }
+.gallery__meta h3 {
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.gallery__meta p {
+  color: var(--ink-dim);
+  max-width: 52ch;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* the fade when a pamphlet changes — motion that answers a click */
+.gallery__stage.is-swapping .gallery__fig img,
+.gallery__stage.is-swapping .gallery__meta {
+  opacity: 0;
+}
+.gallery__fig img,
+.gallery__meta { transition: opacity 130ms ease; }
+
+.gallery__thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: clamp(22px, 3vh, 32px);
+}
+.gallery__thumb {
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  cursor: pointer;
+  line-height: 0;
+  transition: border-color 140ms ease;
+}
+.gallery__thumb img {
+  width: 56px;
+  aspect-ratio: 225 / 332;
+  object-fit: cover;
+}
+.gallery__thumb:hover { border-color: var(--ink-dim); }
+.gallery__thumb.is-active { border-color: var(--lime); }
+.gallery__thumb:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .gallery__stage { grid-template-columns: 1fr; }
+}
 
 /* ============================================================
    nav strip under the hero — the four identities

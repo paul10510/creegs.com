@@ -87,6 +87,55 @@
     }
   }
 
+  /* ─── 3. merit badge gallery ─────────────────────────── */
+  var stage = document.querySelector(".gallery__stage");
+  if (stage) {
+    var img = document.getElementById("galleryImg");
+    var title = document.getElementById("galleryTitle");
+    var desc = document.getElementById("galleryDesc");
+    var count = document.getElementById("galleryCount");
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll(".gallery__thumb"));
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+
+    function select(i) {
+      var t = thumbs[i];
+      img.src = t.getAttribute("data-src");
+      img.alt = t.getAttribute("data-alt");
+      title.textContent = t.getAttribute("data-title");
+      desc.textContent = t.getAttribute("data-desc");
+      count.textContent = pad(i + 1) + " / " + pad(thumbs.length);
+      thumbs.forEach(function (b, j) {
+        var on = i === j;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    }
+
+    thumbs.forEach(function (t, i) {
+      t.addEventListener("click", function () {
+        if (t.classList.contains("is-active")) return;
+        // brief fade out, swap, fade back — motion that answers the click
+        stage.classList.add("is-swapping");
+        setTimeout(function () {
+          select(i);
+          stage.classList.remove("is-swapping");
+        }, reduce ? 0 : 130);
+      });
+    });
+
+    // arrow keys move through the pamphlets once focus is in the gallery
+    document.querySelector(".gallery__thumbs").addEventListener("keydown", function (e) {
+      var cur = thumbs.indexOf(document.activeElement);
+      if (cur < 0) return;
+      var next = e.key === "ArrowRight" ? cur + 1 : e.key === "ArrowLeft" ? cur - 1 : -1;
+      if (next >= 0 && next < thumbs.length) {
+        e.preventDefault();
+        thumbs[next].focus();
+        select(next);
+      }
+    });
+  }
+
   /* ─── 2. active tab tracking ───────────────────────────── */
   var sections = Array.prototype.slice.call(document.querySelectorAll("section[id]"));
   var railLinks = Array.prototype.slice.call(
