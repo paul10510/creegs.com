@@ -38,12 +38,10 @@
 * { margin: 0; padding: 0; }
 
 html {
-  scroll-behavior: smooth;
-  /* the fixed rail is 208px wide; stop anchors sliding under the top bar */
+  /* No scroll-behavior:smooth here. In this browser it blocks anchor
+     navigation outright — clicking a nav link left scrollY at 0 — and a
+     dead nav is far worse than a jump instead of a glide. */
   scroll-padding-top: 24px;
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
 }
 
 body {
@@ -564,7 +562,7 @@ figcaption code {
    ============================================================ */
 .roles {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
 }
@@ -667,9 +665,8 @@ figcaption code {
   html { scroll-padding-top: 92px; }
 
   .hero { min-height: auto; padding-top: clamp(40px, 8vh, 72px); }
-  .roles { grid-template-columns: repeat(2, 1fr); }
-  .roles a:nth-child(2n) { border-right: 0; }
-  .roles a:nth-child(-n+2) { border-bottom: 1px solid var(--rule-soft); }
+  /* three identity cards still fit side by side with the rail gone; a
+     2-column intermediate would leave a lone card in the second row */
 }
 
 @media (max-width: 760px) {

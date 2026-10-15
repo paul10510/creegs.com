@@ -144,11 +144,6 @@
   );
   if (!sections.length || !railLinks.length) return;
 
-  var byId = {};
-  railLinks.forEach(function (a) {
-    byId[a.getAttribute("href").slice(1)] = a;
-  });
-
   var current = null;
 
   function setActive(id) {
@@ -159,28 +154,31 @@
     });
   }
 
-  function pick() {
-    // a section is "current" once its top passes a line ~35% down the viewport;
-    // below that line we belong to whichever section we last crossed
-    var line = window.innerHeight * 0.35;
+  // Driven by IntersectionObserver rather than a scroll handler. A scroll
+  // listener is the obvious way to do this but it quietly does nothing when
+  // scroll events are throttled or absent, and the tab freezes with no way
+  // back. Here the browser does the work and there is no handler to stall.
+  //
+  // rootMargin carves a zero-height band 35% down the viewport; a section is
+  // current while it crosses that line. Whichever observed section sits in
+  // the band last in document order wins, which keeps the handover orderly
+  // when two overlap at a boundary.
+  if (!("IntersectionObserver" in window)) {
+    setActive(sections[0].id);
+    return;
+  }
+
+  var inBand = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { inBand[e.target.id] = e.isIntersecting; });
     var found = null;
     for (var i = 0; i < sections.length; i++) {
-      var r = sections[i].getBoundingClientRect();
-      if (r.top <= line) found = sections[i].id;
+      if (inBand[sections[i].id]) found = sections[i].id;
     }
-    setActive(found || sections[0].id);
-  }
+    // nothing crossing the band means we are past the last section; hold the
+    // last tab rather than snapping Index back on at the bottom of the page
+    setActive(found || current || sections[0].id);
+  }, { rootMargin: "-35% 0px -65% 0px", threshold: 0 });
 
-  var raf = null;
-  function onScroll() {
-    if (raf) return;
-    raf = requestAnimationFrame(function () {
-      raf = null;
-      pick();
-    });
-  }
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  pick();
+  sections.forEach(function (s) { io.observe(s); });
 })();
