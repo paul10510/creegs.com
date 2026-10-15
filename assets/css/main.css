@@ -315,7 +315,6 @@ h4 {
   gap: clamp(28px, 4vw, 64px);
   align-items: start;
 }
-.split--wide-media { grid-template-columns: minmax(0, 54fr) minmax(0, 46fr); }
 
 /* grid items default to min-width:auto, so a long unbreakable string inside a
    column (the Monero address, the parts list) forces the track wider than the
@@ -352,12 +351,21 @@ figcaption {
 }
 
 /* an address this long has to break or it pushes the page wide */
-figcaption code {
-  display: block;
-  margin-top: 3px;
-  font-size: 10.5px;
-  color: var(--ink-dim);
+figcaption {
   overflow-wrap: anywhere;
+}
+
+/* ============================================================
+   contact — one column now that the QR is gone; the two buttons
+   at the bottom give the page somewhere to end
+   ============================================================ */
+.contact { max-width: 640px; }
+.contact .section-title { margin-bottom: clamp(26px, 4vh, 40px); }
+.contact__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  margin-top: clamp(24px, 3.5vh, 38px);
 }
 
 /* the one dark readout — a real terminal, not decoration */
@@ -671,7 +679,6 @@ figcaption code {
 
 @media (max-width: 760px) {
   .split,
-  .split--wide-media { grid-template-columns: 1fr; }
   .roles { grid-template-columns: 1fr; }
   .roles a { border-right: 0; border-bottom: 1px solid var(--rule-soft); }
   .roles a:last-child { border-bottom: 0; }
