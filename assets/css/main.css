@@ -446,10 +446,6 @@ figcaption code {
   font-variant-numeric: tabular-nums;
 }
 
-/* multiple troop roles stack as short lines rather than one long row */
-.dl dd .roles { display: flex; flex-direction: column; gap: 3px; }
-.dl dd .roles em { font-style: normal; color: var(--ink-faint); }
-
 /* ============================================================
    merit badge gallery — click-through pamphlets with descriptions.
    Hairlines and mono labels only; lime marks the active thumb.
