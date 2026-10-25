@@ -334,7 +334,8 @@ h4 {
 figure { margin: 0; }
 
 figure img,
-figure video {
+figure video,
+figure svg {
   width: 100%;
   border: 1px solid var(--rule);
   background: var(--panel);
@@ -570,7 +571,7 @@ figcaption {
    ============================================================ */
 .roles {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
 }
@@ -673,8 +674,7 @@ figcaption {
   html { scroll-padding-top: 92px; }
 
   .hero { min-height: auto; padding-top: clamp(40px, 8vh, 72px); }
-  /* three identity cards still fit side by side with the rail gone; a
-     2-column intermediate would leave a lone card in the second row */
+  /* four identity cards fit side by side with the rail gone */
 }
 
 @media (max-width: 760px) {
